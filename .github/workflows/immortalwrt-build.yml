@@ -71,7 +71,7 @@ jobs:
           key: ${{ env.cache-name }}
 
       - name: "下载编译所需软件源码"
-        run: make defconfig && make download -j$(nproc)|| make download -j1 V=s
+        run: ls -al;cat .config; make defconfig && make download -j$(nproc)|| make download -j1 V=s
 
       - name: "开始编译"
         run: make -j$(nproc) V=s
