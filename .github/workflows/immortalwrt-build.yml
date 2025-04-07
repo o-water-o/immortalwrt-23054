@@ -73,8 +73,8 @@ jobs:
       - name: "下载编译所需软件源码"
         run: |
           cp 1.config .config 
-          cat .config
-          make defconfig && make download -j$(nproc)|| make download -j1 V=s
+          grep passwall .config 
+          make download -j$(nproc)|| make download -j1 V=s
 
       - name: "开始编译"
         run: make -j$(nproc) || make download -j1 V=s
