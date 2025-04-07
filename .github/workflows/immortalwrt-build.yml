@@ -49,7 +49,7 @@ jobs:
           git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
 
       - name: "安装feeds"
-        run: ./scripts/feeds install -a;ls -al;cat .config; 
+        run: ./scripts/feeds install -a
 
       # - name: "package feeds拉取额外软件"
       #   run: |
@@ -71,10 +71,13 @@ jobs:
           key: ${{ env.cache-name }}
 
       - name: "下载编译所需软件源码"
-        run: ls -al;cat .config; make defconfig && make download -j$(nproc)|| make download -j1 V=s
+        run: |
+          cp 1.config .config 
+          cat .config
+          make defconfig && make download -j$(nproc)|| make download -j1 V=s
 
       - name: "开始编译"
-        run: make -j$(nproc) V=s
+        run: make -j$(nproc) || make download -j1 V=s
 
       - name: "上传编译产物"
         uses: actions/upload-artifact@v4
